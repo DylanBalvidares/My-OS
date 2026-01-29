@@ -1,0 +1,35 @@
+"nasm -f elf32 boot.asm -o boot.o"/
+nasm -f elf32 ./boot/boot.asm -o ./bin/boot.o
+
+*f->format
+
+*elf32->executable and linkable format 32 bits
+
+*o->outputfile
+
+"gcc -m32 -c kernel.c -o kernel.o -ffreestanding -O2 -Wall"
+gcc -m32 -c ./kernel/kernel.c -o ./bin/kernel.o -ffreestanding -O2 -Wall
+
+*m32->fuerza la compilacion para una arquitectura de 32 bits(x86)
+
+*c->compila/ensambla los archivos fuente
+ffreestanding->indica que el programa no dispone de una biblioteca estandar de C,el compilador no asumirá que existen funciones estandar.
+
+*Wall->Habilita casi todas las advertencias de errores comunes en el codigo(buena practica)
+
+*o->output file
+
+"ld -m elf_i386 -T linker.ld -o kernel.bin boot.o kernel.o --no-warn-rwx-segments"
+ld -m elf_i386 -T ./boot/linker.ld -o ./bin/kernel.bin    ./bin/boot.o    ./bin/kernel.o    ./bin/graphics.o    --no-warn-rwx-segments
+
+*m elf_i386->especifica el formato para arquitectura i386 
+
+*T linker.ld->indica el uso de un Linker Script personalizado.
+
+*o->define nombre del archivo de salida
+
+*"*.o"->archivos de entrada
+
+*--no-warn-rwx-segments->ld emite advertencias si un segmento tiene permisos de lectura y ejecucion simultaneos
+
+"qemu-system-i386 -kernel kernel.bin"
