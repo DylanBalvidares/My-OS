@@ -1,11 +1,32 @@
 #ifndef STRINGS_H
 #define STRINGS_H
 
-// #include "./mem_alloc.h"
+// #include "./mem_alloc.h";when implements malloc function,remove the buffers of the parameters functions
+#include "./types.h"
 
 #define NULL 0 // or((void*)0)
 
-int get_len(char *str)
+BOOL str_copy(char *dest, const char *src);
+int get_len(const char *str);
+void reverse(const char *original_str, char *buffer);
+void itoa(const int num, char *buffer);
+
+BOOL str_copy(char *dest, const char *src)
+{
+    //...check if dest capacity is ok//NOT IMPLEMENTED YET
+
+    int i = 0;
+
+    do
+    {
+        dest[i] = src[i];
+        i++;
+    } while (src[i] != '\0');
+
+    return get_len(src) == get_len(dest);
+}
+
+int get_len(const char *str)
 {
     int len = 0;
 
@@ -18,45 +39,50 @@ int get_len(char *str)
     return len;
 }
 
-void reverse(char *original_str, char *buffer) // return reverse of a string
+void reverse(const char *original_str, char *buffer) // return reverse of a string
 {
-    char rev_str[20];
-    int rev_str_pos = 0;
     int original_str_len = get_len(original_str);
+    char final_str[4];
+
+    int rev_str_pos = 0;
 
     for (int i = original_str_len - 1; i >= 0; i--)
     {
-        rev_str[rev_str_pos] = original_str[i];
+        final_str[rev_str_pos] = original_str[i];
         rev_str_pos++;
     }
 
-    rev_str[rev_str_pos] = '\0';
-
-    for (int i = 0; i <= original_str_len - 1; i++)
-    {
-        buffer[i] = rev_str[i];
-    }
+    final_str[rev_str_pos] = '\0';
+    str_copy(buffer, final_str);
 }
 
-void itoa(int num, char *buffer) // Integer to ASCII algorithm,basically int to strings
+void itoa(const int num, char *buffer) // Integer to ASCII algorithm,basically int to strings
 {
-    int i = 1.24;
-    char str[20];
+    int i = num;
+    int last_digit;
+    char ascii_val;
+    char str[4];
+    char final_buffer[4];
+    int j = 0;
+    int aux = num;
 
-    if (num < 0)
+    /*NOT IMPLEMENTED YET
+    if(num < 0){}*/
+
+    while (aux != 0)
     {
-        str[i++] = '\0';
-        return;
+        last_digit = aux % 10;
+        ascii_val = '0' + last_digit;
+        aux = aux / 10;
+        str[j] = ascii_val;
+        j++;
     }
 
-    int lastDigit = 0;
+    str[j] = '\0';
 
-    while (num != 0)
-    {
-        lastDigit = num % 10; // get the last digit of number;
-        num = num / 10;       // reduces number
-    }
+    reverse(str, final_buffer);
 
+    str_copy(buffer, final_buffer);
     return;
 }
 

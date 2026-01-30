@@ -1,18 +1,18 @@
 #include "../drivers/graphics.h"
 #include "../libs/multiboot.h"
 #include "../libs/strings.h"
+#include "../libs/types.h"
 
-void kernel_main(unsigned int magic, struct multiboot_tag *mbt)
+void kernel_main(const unsigned int magic, const struct multiboot_tag *mbt)
 {
 
-    char *buffer = 0;
+    char str[4] = {0};
 
     set_background();
-    // print_string("Hello word", 50);
 
-    itoa(123, buffer);
-    // char *str = itoa(123, buffer);
-    print_string(buffer, 50);
+    itoa(123, str);
+
+    print_string(str, 50);
 
     while (1)
         ;
