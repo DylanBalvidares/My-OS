@@ -1,0 +1,20 @@
+***** TEXT CURSOR ***** 
+0x3D4->video driver(CRTC) port in vga text mode
+
+Index	Name
+0x00	Horizontal Total
+0x01	Horizontal Display End
+0x02	Horizontal Blank Start
+0x03	Horizontal Blank End
+0x04	Horizontal Retrace Start
+0x05	Horizontal Retrace End
+0x06	Vertical Total
+0x07	Overflow
+0x08	Preset Row Scan
+0x09	Maximum Scan Line
+0x0A	Cursor Start
+0x0B	Cursor End
+0x0C	Start Address High
+0x0D	Start Address Low
+0x0E	Cursor Location High
+0x0F	Cursor Location Low

@@ -7,7 +7,7 @@ section .multiboot  ;multiboot header
     dd -(0x1BADB002 + 0x00);checksum, this should equal 0
 
 section .text
-
+    
 global _start   ;exports _start symbol,so the linker know where starts the code
 extern kernel_main  ;external function in a C file
 
