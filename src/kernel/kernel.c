@@ -1,15 +1,15 @@
-#include "../drivers/vga_graphics.h"
+#include "../drivers/keyboard.h"
 #include "../libs/multiboot.h"
-#include "../libs/strings.h"
+#include "../tui/terminal_ui.h"
 
-void kernel_main(const unsigned int magic, const struct multiboot_tag *mbt)
-{
+void kernel_main(const unsigned int magic,
+                 const struct multiboot_mmap_entry *mbt) {
 
-    init_background();
+  initialize_terminal();
+  initialize_keyboard();
+  // put_char('h',10,3);
+  //  put_str("Hello\nWorld\njeje\n noo \n   see", 0, 0);
 
-    disable_cursor();
-    test();
-
-    while (1)
-        ;
+  while (1)
+    ;
 }

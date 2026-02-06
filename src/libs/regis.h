@@ -1,23 +1,23 @@
 #ifndef REGIS_H
 #define REGIS_H
 
-// static void inp_reg(int regis, char *buff); // IN//read
+#include "stdint.h"
 
-static inline void write_reg(int port, int reg, int data)
+// return a 8 bits integer->ex:0000 0001
+static inline uint8_t inb(uint16_t port) {
+  uint8_t ret;
+
+  __asm__ volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
+
+  return ret;
+}
+
+static inline void outb(uint16_t port, uint16_t data) // out/write
 {
-  __asm__ volatile(             // gas inline asm
-      "mov %[data],%[reg] \n\t" // instructions
-      "mov 0xAh %%al \n\t"
-      "out %%dx, %%al \n\t"
-
-      "inc %%dx \n\t"
-      "mov 0x20,%%al \n\t"
-      "out %%dx,%%al \n\t"
-      :                    // outputs
-      : [port] "dx"(port), // inputs
-        [reg] "r"(reg),
-        [data] "al"(data)
-      : "dx", "al");
+  __asm__ volatile("out %0, %1" //%0:"a"(data);%1:"nd"(port)
+                   :
+                   : "a"(data),
+                     "nd"(port)); //'a':(AL reg);'nd':(immediate or DX)
 }
 
 #endif
